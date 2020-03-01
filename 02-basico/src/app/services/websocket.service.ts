@@ -44,4 +44,10 @@ export class WebsocketService {
 
   }
 
+  listen( evento: string  ) {
+
+    return this.socket.fromEvent( evento );
+
+  }
+
 }

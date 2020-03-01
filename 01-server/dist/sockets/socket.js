@@ -5,3 +5,9 @@ exports.desconectar = (cliente) => {
         console.log('Cliente desconectado');
     });
 };
+// Escuchar mensajes
+exports.mensaje = (cliente) => {
+    cliente.on('mensaje', (payload) => {
+        console.log('Mensaje recibido', payload);
+    });
+};

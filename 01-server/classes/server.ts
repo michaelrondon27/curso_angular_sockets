@@ -46,6 +46,8 @@ export default class Server {
             // Desconectar
             socket.desconectar( cliente );
 
+            socket.mensaje( cliente );
+
         });
 
     }

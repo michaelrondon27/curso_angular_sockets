@@ -32,6 +32,7 @@ class Server {
             console.log('Cliente conectado');
             // Desconectar
             socket.desconectar(cliente);
+            socket.mensaje(cliente);
         });
     }
     start(callback) {

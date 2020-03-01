@@ -5,13 +5,15 @@ import http from 'http';
 
 export default class Server {
 
+    private static _instance: Server;
+
     public app: express.Application;
     public port: number;
 
     public io: socketIO.Server;
     private htppServer: http.Server;
 
-    constructor() {
+    private constructor() {
 
         this.app = express();
 
@@ -22,6 +24,12 @@ export default class Server {
         this.io = socketIO( this.htppServer );
 
         this.escucharSockets();
+
+    }
+
+    public static get instance() {
+
+        return this._instance || ( this._instance = new this() );
 
     }
 

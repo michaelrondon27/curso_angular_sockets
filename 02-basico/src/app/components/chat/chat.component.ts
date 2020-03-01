@@ -10,6 +10,10 @@ import { ChatService } from '../../services/chat.service';
 })
 export class ChatComponent implements OnInit, OnDestroy {
 
+  elemento: HTMLElement;
+
+  mensajes: any[] = [];
+
   mensajesSubscription: Subscription;
 
   texto = '';
@@ -20,15 +24,25 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+    this.elemento = document.getElementById('chat-mensajes');
+
     this.mensajesSubscription = this.chatService.getMessages().subscribe( msg => {
 
-      console.log(msg);
+      this.mensajes.push( msg );
+
+      setTimeout( () => {
+        this.elemento.scrollTop = this.elemento.scrollHeight;
+      }, 50);
 
     });
 
   }
 
   enviar() {
+
+    if ( this.texto.trim().length === 0 ) {
+      return;
+    }
 
     this.chatService.sendMessage( this.texto );
 

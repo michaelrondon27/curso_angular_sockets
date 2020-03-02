@@ -2,6 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+// Modules
+import { AppRountingModule } from './app-rounting.module';
+
+// Environment
 import { environment } from '../environments/environment';
 
 // Sockets
@@ -26,6 +30,7 @@ import { MensajesComponent } from './pages/mensajes/mensajes.component';
     MensajesComponent
   ],
   imports: [
+    AppRountingModule,
     BrowserModule,
     FormsModule,
     SocketIoModule.forRoot(config)

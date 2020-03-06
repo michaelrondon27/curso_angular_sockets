@@ -10,7 +10,7 @@ export class WebsocketService {
 
   public socketStatus = false;
 
-  public usuario: Usuario;
+  public usuario: Usuario = null;
 
   constructor(
     private socket: Socket
@@ -91,6 +91,8 @@ export class WebsocketService {
     if ( localStorage.getItem('usuario') ) {
 
       this.usuario = JSON.parse( localStorage.getItem('usuario') );
+
+      this.loginWS( this.usuario.nombre );
 
     }
 

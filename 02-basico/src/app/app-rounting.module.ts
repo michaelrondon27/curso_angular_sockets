@@ -5,6 +5,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { MensajesComponent } from './pages/mensajes/mensajes.component';
 
+// Guards
+import { UsuarioGuard } from './guards/usuario.guard';
+
 const appRoutes: Routes = [
   {
     path: '',
@@ -12,7 +15,10 @@ const appRoutes: Routes = [
   },
   {
     path: 'mensajes',
-    component: MensajesComponent
+    component: MensajesComponent,
+    canActivate: [
+      UsuarioGuard
+    ]
   },
   {
     path: '**',

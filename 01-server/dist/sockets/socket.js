@@ -7,10 +7,11 @@ exports.conectarCliente = (cliente) => {
     const usuario = new usuario_1.Usuario(cliente.id);
     exports.usuariosConectados.agregar(usuario);
 };
-exports.desconectar = (cliente) => {
+exports.desconectar = (cliente, io) => {
     cliente.on('disconnect', () => {
         console.log('Cliente desconectado');
         exports.usuariosConectados.borrarUsuario(cliente.id);
+        io.emit('usuarios-activos', exports.usuariosConectados.getLista());
     });
 };
 // Escuchar mensajes
@@ -24,6 +25,7 @@ exports.mensaje = (cliente, io) => {
 exports.configurarUsuario = (cliente, io) => {
     cliente.on('configurar-usuario', (payload, callback) => {
         exports.usuariosConectados.actualizarNombre(cliente.id, payload.nombre);
+        io.emit('usuarios-activos', exports.usuariosConectados.getLista());
         callback({
             ok: true,
             mensaje: `Usuario ${payload.nombre}, configurado`

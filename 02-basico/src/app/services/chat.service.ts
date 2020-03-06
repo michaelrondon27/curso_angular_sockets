@@ -34,4 +34,10 @@ export class ChatService {
 
   }
 
+  getUsuariosActivos() {
+
+    return this.wsService.listen( 'usuarios-activos' );
+
+  }
+
 }

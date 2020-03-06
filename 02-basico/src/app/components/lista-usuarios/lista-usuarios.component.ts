@@ -20,6 +20,9 @@ export class ListaUsuariosComponent implements OnInit {
 
     this.usuariosActivosObs = this.chatService.getUsuariosActivos();
 
+    // Emitir el obtener usuarios
+    this.chatService.emitirUsuariosActivos();
+
   }
 
 }

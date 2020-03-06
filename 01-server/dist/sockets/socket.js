@@ -32,3 +32,9 @@ exports.configurarUsuario = (cliente, io) => {
         });
     });
 };
+// Obtener usuarios
+exports.obtenerUsuarios = (cliente, io) => {
+    cliente.on('obtener-usuarios', () => {
+        io.to(cliente.id).emit('usuarios-activos', exports.usuariosConectados.getLista());
+    });
+};

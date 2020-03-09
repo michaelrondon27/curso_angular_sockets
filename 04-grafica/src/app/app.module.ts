@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 
@@ -17,6 +18,7 @@ const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
   imports: [
     BrowserModule,
     ChartsModule,
+    HttpClientModule,
     SocketIoModule.forRoot(config)
   ],
   providers: [],

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Label } from 'ng2-charts';
 import { ChartDataSets } from 'chart.js';
 
@@ -15,25 +16,19 @@ export class GraficaComponent implements OnInit {
 
   public lineChartLabels: Label[] = ['Enero', 'Febrero', 'Marzo', 'Abril'];
 
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   ngOnInit(): void {
 
-    setInterval( () => {
+    this.getData();
 
-      const newData = [
-        Math.round( Math.random() * 100 ),
-        Math.round( Math.random() * 100 ),
-        Math.round( Math.random() * 100 ),
-        Math.round( Math.random() * 100 )
-      ];
+  }
 
-      this.lineChartData = [{
-        data: newData,
-        label: 'Ventas'
-      }];
+  getData() {
 
-    }, 3000);
+    this.http.get('http://localhost:5000/grafica').subscribe( (data: any) => this.lineChartData = data );
 
   }
 

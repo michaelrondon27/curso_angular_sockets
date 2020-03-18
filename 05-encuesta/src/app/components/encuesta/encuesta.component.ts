@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
+import { WebsocketService } from '../../services/websocket.service';
 
 @Component({
   selector: 'app-encuesta',
@@ -25,9 +27,23 @@ export class EncuestaComponent implements OnInit {
     {data: [ 65, 59, 80, 81 ], label: 'Entrevistados'}
   ];
 
-  constructor() { }
+  constructor(
+    private http: HttpClient,
+    public wsService: WebsocketService
+  ) { }
 
   ngOnInit(): void {
+
+    this.http.get('http://localhost:5000/grafica').subscribe( (data: any) => this.barChartData = data );
+
+    this.escucharSocket();
+
+  }
+
+  escucharSocket() {
+
+    this.wsService.listen('cambio-grafica').subscribe( (data: any) => this.barChartData = data );
+
   }
 
 }

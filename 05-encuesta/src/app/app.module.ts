@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { EncuestaComponent } from './components/encuesta/encuesta.component';
 
+import { ChartsModule } from 'ng2-charts';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
 const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
@@ -16,6 +17,7 @@ const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
   ],
   imports: [
     BrowserModule,
+    ChartsModule,
     HttpClientModule,
     SocketIoModule.forRoot(config)
   ],

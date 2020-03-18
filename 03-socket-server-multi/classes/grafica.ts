@@ -1,36 +1,32 @@
+/*  Este código va en el backend
+    Es la nueva clase de GraficaData
+
+    Si este archivo ya existe, reemplazarlo por este nuevo.
+    Esta simplificado pero funciona de la misma manera
+    que en la sección anterior.
+*/
+
 export class GraficaData {
 
-    private meses: string[] = ['enero', 'febrero', 'marzo', 'abril'];
-
+    private labels: string[] = [];
     private valores: number[] = [0, 0, 0, 0];
 
-    constructor() {}
+    constructor() { }
 
-    getDataGrafica() {
-
-        return [
-            {
-                data: this.valores,
-                label: 'Ventas'
-            }
-        ];
-
+    setLabels( labels: string[] ) {
+        this.labels = labels;
     }
 
-    incrementarValor( mes: string, valor: number ) {
+    getDataGrafica() {
+        return [
+            { data: this.valores, label: 'Preguntas' }
+        ];
+    }
 
-        mes = mes.toLocaleLowerCase().trim();
 
-        for ( let i in this.meses ) {
+    incrementarValor( opcion: number, valor: number ) {
 
-            if ( this.meses[i] === mes ) {
-
-                this.valores[i] += valor;
-
-            }
-
-        }
-
+        this.valores[opcion] += valor;
         return this.getDataGrafica();
 
     }

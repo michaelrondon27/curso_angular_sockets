@@ -16,10 +16,10 @@ router.get('/grafica', ( req: Request, res: Response  ) => {
 
 router.post('/grafica', ( req: Request, res: Response  ) => {
 
-    const mes = req.body.mes;
+    const opcion = Number( req.body.opcion );
     const unidades = Number( req.body.unidades );
 
-    grafica.incrementarValor( mes, unidades );
+    grafica.incrementarValor( opcion, unidades );
 
     const server = Server.instance;
     server.io.emit('cambio-grafica', grafica.getDataGrafica() );

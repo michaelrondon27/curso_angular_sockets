@@ -20,6 +20,14 @@ export const mapaSockets = ( cliente: Socket, io: socketIO.Server ) => {
 
     });
 
+    cliente.on( 'marcador-borrar', (id: string) => {
+        
+        mapa.borrarMarcador( id );
+
+        cliente.broadcast.emit( 'marcador-borrar', id );
+
+    });
+
 }
 
 export const conectarCliente = ( cliente: Socket, io: socketIO.Server ) => {

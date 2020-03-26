@@ -45,6 +45,16 @@ export class MapaComponent implements OnInit {
 
   }
 
+  escucharSockets() {
+
+    // marcador-nuevo
+
+    // marcador-mover
+
+    // marcador-borrar
+
+  }
+
   crearMapa() {
 
     (mapboxgl as any).accessToken = 'pk.eyJ1IjoibXJvbmRvbjcyIiwiYSI6ImNqeGJyNnVhYzA3MWwzeXBlaHlzc3ZleG4ifQ.TwvVQCK3WtQFEVKGdEp1kg';

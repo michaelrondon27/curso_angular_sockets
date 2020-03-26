@@ -28,6 +28,14 @@ export const mapaSockets = ( cliente: Socket, io: socketIO.Server ) => {
 
     });
 
+    cliente.on( 'marcador-mover', (marcador: Marcador) => {
+        
+        mapa.moverMarcador( marcador );
+
+        cliente.broadcast.emit( 'marcador-mover', marcador );
+
+    });
+
 }
 
 export const conectarCliente = ( cliente: Socket, io: socketIO.Server ) => {

@@ -48,6 +48,11 @@ export class MapaComponent implements OnInit {
     this.wsService.listen( 'marcador-nuevo' ).subscribe( (marcador: Lugar) => this.agregarMarcador( marcador ));
 
     // marcador-mover
+    this.wsService.listen( 'marcador-mover' ).subscribe( (marcador: Lugar) => {
+
+      this.markersMapbox[ marcador.id ].setLngLat([ marcador.lng, marcador.lat ]);
+
+    });
 
     // marcador-borrar
     this.wsService.listen( 'marcador-borrar' ).subscribe( (id: string) => {
@@ -107,7 +112,12 @@ export class MapaComponent implements OnInit {
 
       const lngLat = marker.getLngLat();
 
-      // TODO: crear evento para emitir las coordenadas de este marcador
+      const nuevoMarcador = {
+        id: marcador.id,
+        ...lngLat
+      };
+
+      this.wsService.emit( 'marcador-mover', nuevoMarcador );
 
     });
 

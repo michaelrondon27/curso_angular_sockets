@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { WebsocketService } from '../../services/websocket.service';
 import { Lugar } from '../../interfaces/interfaces';
 
 import * as mapboxgl from 'mapbox-gl';
@@ -21,7 +22,8 @@ export class MapaComponent implements OnInit {
   mapa: mapboxgl.Map;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private wsService: WebsocketService
   ) { }
 
   ngOnInit(): void {
@@ -34,11 +36,18 @@ export class MapaComponent implements OnInit {
 
     });
 
+    this.escucharSockets();
+
   }
 
   escucharSockets() {
 
     // marcador-nuevo
+    this.wsService.listen( 'marcador-nuevo' ).subscribe( (marcador: Lugar) => {
+
+      this.agregarMarcador( marcador );
+
+    });
 
     // marcador-mover
 
@@ -120,6 +129,9 @@ export class MapaComponent implements OnInit {
     };
 
     this.agregarMarcador( customMarker );
+
+    // emitir marcador-nuevo
+    this.wsService.emit( 'marcador-nuevo', customMarker );
 
   }
 

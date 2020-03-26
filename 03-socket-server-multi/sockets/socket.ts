@@ -2,10 +2,25 @@ import { Socket } from 'socket.io';
 import socketIO from 'socket.io';
 import { UsuariosLista } from '../classes/usuarios-lista';
 import { Usuario } from '../classes/usuario';
-
+import { Mapa } from '../classes/mapa';
+import { Marcador } from '../classes/marcador';
 
 export const usuariosConectados = new UsuariosLista();
 
+export const mapa = new Mapa();
+
+// Eventos de mapa
+export const mapaSockets = ( cliente: Socket, io: socketIO.Server ) => {
+
+    cliente.on( 'marcador-nuevo', (marcador: Marcador) => {
+        
+        mapa.agregarMarcador( marcador );
+
+        cliente.broadcast.emit( 'marcador-nuevo', marcador );
+
+    });
+
+}
 
 export const conectarCliente = ( cliente: Socket, io: socketIO.Server ) => {
 
@@ -13,7 +28,6 @@ export const conectarCliente = ( cliente: Socket, io: socketIO.Server ) => {
     usuariosConectados.agregar( usuario );
 
 }
-
 
 export const desconectar = ( cliente: Socket, io: socketIO.Server ) => {
 
@@ -27,7 +41,6 @@ export const desconectar = ( cliente: Socket, io: socketIO.Server ) => {
     });
 
 }
-
 
 // Escuchar mensajes
 export const mensaje = ( cliente: Socket, io: socketIO.Server ) => {
@@ -58,7 +71,6 @@ export const configurarUsuario = ( cliente: Socket, io: socketIO.Server ) => {
     });
 
 }
-
 
 // Obtener Usuarios
 export const obtenerUsuarios = ( cliente: Socket, io: socketIO.Server ) => {

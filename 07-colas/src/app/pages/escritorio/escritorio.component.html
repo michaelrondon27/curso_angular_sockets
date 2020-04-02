@@ -1,7 +1,19 @@
 <h1>Escritorio</h1>
-<h4>Atendiendo a <small>....</small></h4>
+
+<h4>
+    <ng-container *ngIf="ticket.numero == 0">
+        No hay tickets para atender.
+    </ng-container>
+
+    <ng-container *ngIf="ticket.numero != 0">
+        Atendiendo a
+        <small *ngIf="ticket.numero == 0">....</small>
+        <small *ngIf="ticket.numero != 0">{{ ticket.numero }}</small>
+    </ng-container>
+</h4>
+
 <hr>
 
-<button class="btn btn-primary btn-lg">
+<button class="btn btn-primary btn-lg" (click)="atenderTicket()">
     Atender siguiente ticket
 </button>

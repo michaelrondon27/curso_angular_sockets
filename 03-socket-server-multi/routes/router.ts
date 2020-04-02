@@ -1,10 +1,23 @@
 import { Router, Request, Response } from 'express';
 import Server from '../classes/server';
 
-import { usuariosConectados, mapa } from '../sockets/socket';
+import { usuariosConectados, mapa, ticketControl } from '../sockets/socket';
 import { GraficaData } from '../classes/grafica';
 
 const router = Router();
+
+// Colas
+router.get('/ultimo-ticket', ( req: Request, res: Response ) => {
+
+    res.json( ticketControl.getUltimoTicket() );
+
+});
+
+router.get('/ultimos-cuatro', ( req: Request, res: Response ) => {
+
+    res.json( ticketControl.getUltimosCuatro() );
+
+});
 
 // Mapa
 router.get('/mapa', ( req: Request, res: Response  ) => {

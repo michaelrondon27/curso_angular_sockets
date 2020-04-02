@@ -44,6 +44,9 @@ export default class Server {
             // Conectar cliente
             socket.conectarCliente( cliente, this.io );
 
+            // Configuracion de los tickets
+            socket.ticketControlSockets( cliente, this.io );
+
             // Configuracion del mapa
             socket.mapaSockets( cliente, this.io );
 

@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+import { environment } from '../../../environments/environment';
+
+import { WebsocketService } from '../../services/websocket.service';
+
+import { UltimoTicket } from '../../interfaces/interface';
 
 @Component({
   selector: 'app-nuevo-ticket',
@@ -7,9 +14,47 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NuevoTicketComponent implements OnInit {
 
-  constructor() { }
+  loading: boolean = false;
+
+  ticket: UltimoTicket = {};
+
+  constructor(
+    private http: HttpClient,
+    private wsService: WebsocketService
+  ) { }
 
   ngOnInit(): void {
+
+    this.getUltimoTicket();
+
+    this.escucharSockets();
+
+  }
+
+  escucharSockets() {
+
+    this.wsService.listen( 'ultimo-ticket' ).subscribe( (resp: any) => this.ticket = resp.data );
+
+  }
+
+  generarTicket() {
+
+    this.wsService.emit( 'generar-nuevo-ticket' );
+
+  }
+
+  getUltimoTicket() {
+
+    this.loading = true;
+
+    this.http.get<UltimoTicket>( environment.socketConfig.url + '/ultimo-ticket' ).subscribe( (resp: any) => {
+
+      this.loading = false;
+
+      this.ticket = resp.data;
+
+    });
+
   }
 
 }

@@ -2,13 +2,23 @@
     <tr>
         <td>
             <span id="lblNuevoTicket">
-                Cargando...
+                <ng-container *ngIf="loading">Cargando...</ng-container>
+
+                <ng-container *ngIf="!loading">
+                    <ng-container *ngIf="ticket.ultimoTicket == 0">
+                        No hay tickets generados
+                    </ng-container>
+
+                    <ng-container *ngIf="ticket.ultimoTicket != 0">
+                        Último ticket generado: {{ ticket.ultimoTicket | json }}
+                    </ng-container>
+                </ng-container>
             </span>
         </td>
     </tr>
     <tr>
         <td>
-            <button class="btn btn-secondary btn-lg">
+            <button class="btn btn-secondary btn-lg" (click)="generarTicket()">
                 Generar nuevo ticket
             </button>
         </td>

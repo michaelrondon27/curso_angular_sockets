@@ -1,13 +1,37 @@
 import { Socket } from 'socket.io';
 import socketIO from 'socket.io';
+
 import { UsuariosLista } from '../classes/usuarios-lista';
 import { Usuario } from '../classes/usuario';
 import { Mapa } from '../classes/mapa';
 import { Marcador } from '../classes/marcador';
+import { TicketControl } from '../classes/ticket-control';
 
 export const usuariosConectados = new UsuariosLista();
 
 export const mapa = new Mapa();
+
+export const ticketControl = new TicketControl();
+
+export const ticketControlSockets = ( cliente: Socket, io: socketIO.Server ) => {
+
+    cliente.on( 'generar-nuevo-ticket', () => {
+
+        ticketControl.generarNuevoTicket();
+
+        io.emit( 'ultimo-ticket', ticketControl.getUltimoTicket() );
+
+    });
+
+    cliente.on( 'atender-ticket', (escritorio: any) => {
+
+        io.to( cliente.id ).emit( 'atendiendo-ticket', ticketControl.atenderTicket( escritorio ) );
+
+        io.emit( 'ultimos-cuatro', ticketControl.getUltimosCuatro() );
+
+    });
+
+}
 
 // Eventos de mapa
 export const mapaSockets = ( cliente: Socket, io: socketIO.Server ) => {

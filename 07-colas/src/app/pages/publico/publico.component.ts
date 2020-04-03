@@ -35,13 +35,31 @@ export class PublicoComponent implements OnInit, OnDestroy {
 
   escucharSockets() {
 
-    this.wsService.listen( 'ultimos-cuatro' ).subscribe( (resp: any) => this.tickets = resp.data );
+    this.wsService.listen( 'ultimos-cuatro' ).subscribe( (resp: any) => {
+
+      this.playAudio();
+
+      this.tickets = resp.data;
+
+    });
 
   }
 
   getUltimosCuatro() {
 
     this.http.get( environment.socketConfig.url + '/ultimos-cuatro' ).subscribe( (resp: any) => this.tickets = resp.data );
+
+  }
+
+  playAudio() {
+
+    const audio = new Audio();
+
+    audio.src = '../../../assets/audio/new-ticket.mp3';
+
+    audio.load();
+
+    audio.play();
 
   }
 
